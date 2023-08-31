@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/admin/business/businessList.css}">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha384-nHGZxOCfPIKnRfMCsb5sy8GfnmUjF0zUbSHEA0R5MUYD6FpXw6boPkTtIj0kl3V6" crossorigin="anonymous"></script>
+<script>
+	//HTML sideBar연결 		
+    fetch("/admin/sidebar")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("sidebar").innerHTML = data;
+            
+            // 사이드바에 아코디언 기능 적용
+            $(".accordion").click(function() {
+                console.log("Clicked"); // Debugging message
+                $(this).toggleClass("active");
+                $(this).siblings(".panel").slideToggle("fast");
+            });
+
+    });
+    function navigateTo(url) {
+	  window.location.href = url;
+	}
+	
+	$(document).ready(function(){
+	  $("#btnSearch").click(function(){
+	    var searchType = $("#cname").val();
+	    var keyword = $("#keyword").val();
+	    window.location.href = "/admin/accomodationRv/accomodationRvList?" + searchType + "=" + keyword;
+	  });
+	});
+
+	  document.addEventListener("DOMContentLoaded", function () {
+	    const btnAccomodationRvInsert = document.querySelector(".insert_list");
+	    btnAccomodationRvInsert.addEventListener("click", openModal);
+	
+	    const btnUpdate = document.querySelector(".update_list");
+	    btnUpdate.addEventListener("click", openUpdateModal);
+	  });
+	  
+	$(document).ready(function() {
+	  $(".delete_list").click(function(event) {
+	    event.preventDefault();
+	    
+	    if (confirm('정말로 삭제하시겠습니까?')) {
+	      let accomodationRvNo = $(this).data('accomodationrvno');
+	      
+	      $.ajax({
+	        url: "/accomodationRv/delete/" + accomodationRvNo,
+	        method: "POST",
+	        success: function(response) {
+	            alert("삭제되었습니다.");
+	            window.location.reload();
+	        },
+	        error: function() {
+	            alert("삭제에 실패하였습니다.");
+	        }
+	      });
+	    }
+	  });
+	});
+	
+	$(document).ready(function () {
+	    $(".insert_list").click(function () {
+	        const modal = document.getElementById("myModal");
+	        modal.style.display = "block";
+	
+	        const btnCloseModal = document.getElementById("btnCloseModal");
+	        btnCloseModal.addEventListener("click", closeModal);
+	    });
+	
+	    function closeModal() {
+	        const modal = document.getElementById("myModal");
+	        modal.style.display = "none";
+	
+	        const btnCloseModal = document.getElementById("btnCloseModal");
+	        btnCloseModal.removeEventListener("click", closeModal);
+	    };
+	
+	    // 모달 내부의 폼 제출
+	    $("#insertForm").submit(function (event) {
+	        event.preventDefault(); // 기본 폼 제출 방지
+	
+	        let formData = new FormData(this);
+	
+	        $.ajax({
+	            url: "/accomodationRv/insert",
+	            type: "post",
+	            processData: false,
+	            contentType: false,
+	            data: formData,
+	            success: function (response) {
+	                alert("추가하였습니다.");
+	                window.location.reload();
+	            },
+	            error: function () {
+	                alert("추가에 실패하였습니다.");
+	            }
+	        });
+	    });
+	});
+	
+	$(document).ready(function () {
+	    function openUpdateModal() {
+	        const modalUpdate = document.getElementById("modalUpdate");
+	        modalUpdate.style.display = "block";
+	
+	        const btnCloseModalUpdate = document.getElementById("btnCloseModalUpdate");
+	        btnCloseModalUpdate.addEventListener("click", closeUpdateModal);
+	    }
+	
+	    function closeUpdateModal() {
+	        console.log("Closing modal");
+	
+	        const modalUpdate = document.getElementById("modalUpdate");
+	        modalUpdate.style.display = "none";
+	
+	        const btnCloseModalUpdate = document.getElementById("btnCloseModalUpdate");
+	        btnCloseModalUpdate.removeEventListener("click", closeUpdateModal);
+	    }
+
+    // Attach click event to the update button
+    $(".update_list").click(function () {
+        openUpdateModal();
+        // Extract user data and populate the form fields
+        const accomodationRVNo = $(this).closest("tr").find(".table_no").text();
+        const accomodationRVCheckIn = $(this).closest("tr").find(".table_in").text();
+        const accomodationRVCheckOut = $(this).closest("tr").find(".table_out").text();
+        const accomodationRVDate = $(this).closest("tr").find(".table_date").text();
+        const accomodationRVName = $(this).closest("tr").find(".table_name").text();
+        const accomodationRVPeople = $(this).closest("tr").find(".table_people").text();
+        const accomodationRVPhone = $(this).closest("tr").find(".table_phone").text();
+
+        $("#updateForm input[name='accomodationRVNo']").val(accomodationRVNo);
+        $("#updateForm input[name='accomodationRVCheckIn']").val(accomodationRVCheckIn);
+        $("#updateForm input[name='accomodationRVCheckOut']").val(accomodationRVCheckOut);
+        $("#updateForm input[name='accomodationRVDate']").val(accomodationRVDate);
+        $("#updateForm input[name='accomodationRVName']").val(accomodationRVName);
+        $("#updateForm input[name='accomodationRVPeople']").val(accomodationRVPeople);
+        $("#updateForm input[name='accomodationRVPhone']").val(accomodationRVPhone);
+    });
+
+    // Modal form submission
+    $("#updateForm").submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "/accomodationRv/update/" + formData.get("accomodationRvNo"),
+            type: "post",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (response) {
+                alert("수정되었습니다.");
+                window.location.reload();
+            },
+            error: function () {
+                alert("수정에 실패하였습니다.");
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+<!--사이드바-->
+<div id="sidebar"></div>
+<div class="MainBoard" id="mainContent">
+<div class="main_container">
+	<div class="list_top">
+		<div class="search_box">
+			<select name="select_box" id="cname">
+					<option value="usersName">예약자</option>
+					<option value="accomodationName">숙소명</option>
+			</select>
+			<div class="search_bar">
+				<i class="fa-solid fa-magnifying-glass fa-lg" style="color: #8fa0bd;" id="btnSearch"></i>
+				<input type="search" class="search" id="keyword" name="keyword" placeholder="찾으실 내용을 검색해주세요">
+				<input type="hidden" id="pageNUM" name="pageNUM" value="1" />
+			</div>
+		</div>
+		<button class="insert_list" onclick="openModal()">추가</button>
+	</div>
+	<div class="container">
+	<hr/>
+	<table class="rwd-table">
+		<tr>
+			<th class="table_no">예약코드</th>
+			<th class="table_in">체크인 날짜</th>
+			<th class="table_out">체크아웃 날짜</th>
+			<th class="table_date">예약날짜</th>
+			<th class="table_people">인원수</th>
+			<th class="table_users">예약자</th>
+			<th class="table_accomodation">숙소명</th>
+			<th class="table_update">관리</th>
+		</tr>
+		<tr th:each="a:${list}">
+			<td class="table_no" th:text="${a.accomodationRVNo}"></td>
+			<td class="table_in" th:text="${a.accomodationRVCheckIn}"></td>
+			<td class="table_out" th:text="${a.accomodationRVCheckOut}"></td>
+			<td class="table_date" th:text="${a.accomodationRVDate}"></td>
+			<td class="table_people" th:text="${a.accomodationRVPeople}"></td>
+			<td class="table_name" style="display: none;" th:text="${a.accomodationRVName}"></td>
+			<td class="table_phone" style="display: none;"  th:text="${a.accomodationRVPhone}"></td>
+			<td class="table_users" th:text="${a.users.usersName}"></td>
+			<td class="table_accomodation" th:text="${a.accomodation.accomodationName}"></td>
+			<td class="table_update">
+				<button class="update_list" onclick=openUpdateModal() >수정</button>
+				<button class="delete_list" th:data-accomodationrvno="${a.accomodationRVNo}">삭제</button>
+			</td>
+		</tr>
+	</table>
+	<hr />
+	</div>
+	<div class="pagination">
+	    <a href="/admin/accomodationRv/accomodationRvList?page=0&usersName=${usersName}&accomodatioName=${accomodatioName}">«</a>
+	     <!--굳이 태그로 감쌀 필요 없는 부분을 타임리프 문법으로 사용할 때 사용-->
+		    <th:block th:each="page:${#numbers.sequence(startPage, endPage)}">
+			    <a th:href="@{/admin/accomodationRv/accomodationRvList(page=${page -1}, usersName=${usersName}, accomodatioName=${accomodatioName})}" th:text="${page}" th:style="${page == nowPage ? 'background-color:rgb(0, 128, 192); color:white; border-radius:5px;' : ''}">></a>
+			</th:block>
+	    <a href="/admin/accomodationRv/accomodationRvList?page=${totalPages - 1}&usersName=${usersName}&accomodatioName=${accomodatioName}}">»</a>
+	</div>
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <span class="close-modal-btn" id="btnCloseModal">&times;</span>
+	    <h2>사용자 추가</h2>
+	    <form id="insertForm" action="/accomodationRv/insert" method="post">		
+			체크인날짜 : <input type="Date" name="accomodationRVCheckIn"><br/>
+			체크아웃날짜 : <input type="Date" name="accomodationRVCheckOut"><br>
+			예약날짜 : <input type="Date" name="accomodationRVDate"><br>
+			인원수 : <input type="text" name="accomodationRVPeople"><br/>
+			예약명 : <input type="text" name="accomodationRVName"><br/>
+			번호 : <input type="text" name="accomodationRVPhone"><br/>
+			예약자:
+	        <select name='users.usersNo'>
+	            <option th:each='users : ${usersName}' th:value='${users.usersNo}' th:text='${users.usersName}'></option>
+	        </select><br>
+	         <!-- Activities dropdown -->
+	         숙소:
+	         <select name='accomodation.accomodationNo'>
+	             <option th:each='accomodation : ${accomodationName}' th:value='${accomodation.accomodationNo}' th:text='${accomodation.accomodationName}'></option>
+	         </select><br>
+			<input type="submit" value="등록">
+			<input type="reset" value="다시입력">		
+		</form>
+	  </div>
+	</div>
+</div>
+	<div id="modalUpdate" class="modalUpdate">
+	  <div class="modalUpdate-content">
+	    <span class="close-modalUpdate-btn" id="btnCloseModalUpdate">×</span>
+	    <h2>사용자 수정</h2>
+	    <form id="updateForm" action="/accomodationRv/update/{accomodationRvNo}" method="post">
+			<input type="hidden" name="accomodationRvNo"/>
+			체크인날짜 : <input type="Date" name="accomodationRVCheckIn"><br/>
+			체크아웃날짜 : <input type="Date" name="accomodationRVCheckOut"><br>
+			예약날짜 : <input type="Date" name="accomodationRVDate"><br>
+			인원수 : <input type="text" name="accomodationRVPeople"><br/>
+			예약명 : <input type="text" name="accomodationRVName"><br/>
+			번호 : <input type="text" name="accomodationRVPhone"><br/>
+			예약자:
+ 			<select name='users.usersNo'>
+			    <option th:each='user : ${usersName}' 
+			      th:value='${user.usersNo}'
+			      th:selected="${currentAccomodationRV != null && currentAccomodationRV.users != null && currentAccomodationRV.users.id == user.id}"
+			      th:text='${user.usersName}'>
+			    </option>
+			</select><br/>
+		    숙소명 :
+		    <select name='accomodation.accomodationNo'>
+			    <option th:each='accomodation : ${accomodationName}' 
+			      th:value='${accomodation.accomodationNo}'
+			       th:selected="${currentAccomodationRV != null && currentAccomodationRV.accomodation != null && currentAccomodationRV.accomodation.id == accomodation.id}"
+			       th:text='${accomodation.accomodationName}'>
+			    </option>
+			</select><br/>
+			<input type="submit" value="수정"/>
+			<input type="reset" value="다시입력"/>
+		</form>
+	  </div>
+	</div>
+</div>
+</body>
+</html>

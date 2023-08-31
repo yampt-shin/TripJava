@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/admin/adminPage/adminPage.css}">
+<title>관리자 페이지</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	//HTML sideBar연결 		
+    fetch("/admin/sidebar")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("sidebar").innerHTML = data;
+            
+            // 사이드바에 아코디언 기능 적용
+            $(".accordion").click(function() {
+                console.log("Clicked"); // Debugging message
+                $(this).toggleClass("active");
+                $(this).siblings(".panel").slideToggle("fast");
+            });
+    });
+    function navigateTo(url) {
+	  window.location.href = url;
+	}
+		
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawCharts);
+  
+      function generateLastWeekDates() {
+        var dates = [];
+        var today = new Date();
+        for (var i = 6; i >= 0; i--) {
+            var date = new Date(today);
+            date.setDate(date.getDate() - i);
+            dates.push(formatDate(date));
+        }
+        return dates;
+    }
+    function formatDate(date) {
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return month + '-' + day;
+    }
+    
+    function generateChartData(data) {
+            var dates = generateLastWeekDates();
+            var chartData = [];
+            for (var i = 0; i < dates.length; i++) {
+                var date = dates[i];
+                var visitCount = 0;
+                for (var j = 0; j < data.length; j++) {
+                    if (formatDate(new Date(data[j].visitDate)) === date) {
+                        visitCount = data[j].visitCount;
+                        break;
+                    }
+                }
+                chartData.push([date, visitCount]);
+            }
+            return chartData;
+        }
+    
+ 		function drawCharts() {
+            $.ajax({
+                url: "/dashboard-data",
+                method: "GET",
+                success: function (data) {
+                    var areaData = google.visualization.arrayToDataTable([
+                        ['날짜', '방문자 수'],
+                        ...generateChartData(data),
+                    ]);
+
+                    var areaOptions = {
+                        title: '최근 방문자 수',
+                        titleTextStyle: { fontSize: 20, },
+                        hAxis: { title: '일주일간 방문자 수', titleTextStyle: { color: '#333' } },
+                        vAxis: { minValue: 0 }
+                    };
+
+                    var areaChart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                    areaChart.draw(areaData, areaOptions);
+                },
+                error: function () {
+                    console.log("Error loading dashboard data.");
+                }
+            });
+        }
+        
+     //원형 차트  
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var totalActivity = /*[[${totalActivity}]]*/ 'default';
+        var totalAccomodation = /*[[${totalAccomodation}]]*/ 'default';
+
+        var data = google.visualization.arrayToDataTable([
+          ['업체 현황', '업체 수'],
+          ['숙소 업체수', totalAccomodation ],
+          ['액티비티 업체수', totalActivity ],
+        ]);
+
+        var options = {
+          title: '업체 현황',
+       	  titleTextStyle: { fontSize: 20, },
+          hAxis: { title: '일주일간 방문자 수', titleTextStyle: { color: '#333' } },
+          vAxis: { minValue: 0 }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+
+</script>
+</head>
+<body>
+<!--사이드바-->
+<div id="sidebar"></div>	
+<div class="MainBoard" id="mainContent">
+	<div class="main_container">
+	<div class="container_top">
+		<div class="total_visit">
+		  <div class="card">
+		    <div class="card_header">총 회원수</div>
+		   		<div class="card_content">
+					<div class="card_body" th:text="${totalUsers+'명'}"></div>
+					<div class="card_body_rate">+12.5%</div>   
+				</div>
+		  </div>
+		</div>
+		<div class="today_visit">
+			<div class="card">
+				<div class="card_header">일 방문자수</div>
+				<div class="card_content">
+					<div class="card_body" th:text="${todayVisit+'명'}"></div>
+					<div class="card_body_rate">+2.5%</div>   
+				</div>
+			</div>
+		</div>
+		<div class="total_rv">
+			<div class="card">
+				<div class="card_header">숙소 예약수</div>
+				<div class="card_content">
+					<div class="card_body" th:text="${totalAccomodationRv+'건'}"></div>
+					<div class="card_body_rate">+50%</div>   
+				</div>
+			</div>
+		</div>
+		<div class="rv_rate">
+			<div class="card">
+				<div class="card_header">액티비티 예약수</div>
+				<div class="card_content">
+					<div class="card_body" th:text="${totalActivityRv+'건'}"></div>
+					<div class="card_body_rate">+2.5%</div>   
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container_bottom">
+		<div class="graph_chart">
+			<div id="chart_div"></div>
+		</div>
+			<div class="table_chart">
+				<div id="piechart"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

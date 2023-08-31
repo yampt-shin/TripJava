@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <title>MainPage</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C600%2C700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter%3A400%2C600"/>
+  <link rel="stylesheet" href="/css/community/mainpage.css"/>
+   <link rel="stylesheet" th:href="@{/css/header/header.css}">
+  <link rel="stylesheet" th:href="@{/css/footer/footer.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+   <script type="text/javascript" src="/js/mypage/mypageProfile.js" defer></script>
+	<script type="text/javascript" src="/js/header/headerfooter.js" defer></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script>
+   function searchAccom(addr){
+	   console.log("클릭됨"+addr);
+	   var today = moment().format('YYYY/MM/DD');
+	   var addrKor
+	   if(addr == 'jeju'){
+		   addrKor = '제주'
+	   }else if(addr == 'gangwon'){
+		   addrKor = '강원'
+	   }else if(addr == 'busan'){
+		   addrKor = '부산'
+	   }else{
+		   addrKor = '서울'
+	   }
+	    var url =  "/accomodation/accomodationMain?addr="+addrKor+"&date="+today + ' ~ ' + today+"&person=1";
+	    console.log("url"+url);
+      location.href= url;
+   }
+	</script>
+</head>
+<body>
+ <!--Header-->
+	<div id="header"></div>
+	
+<div class="mainpage-siH">
+  <div class="divcontainer-GVX">
+	  
+	  <!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+	<!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+  
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/images/mainpage/main.jpg" alt="main1" class="d-block" style="width:100%; height: 30rem;">
+    </div>
+    <div class="carousel-item">
+      <img src="/images/mainpage/main2.jpg" alt="main2" class="d-block" style="width:100%; height: 30rem;">
+    </div>
+    <div class="carousel-item">
+      <img src="/images/mainpage/main3.jpg" alt="main3" class="d-block" style="width:100%; height: 30rem;">
+    </div>
+  </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+    <!--첫번째 리스트 -->
+    <div style="display: flex; justify-content: center; align-items: center;  width: 100%; margin-top: 2rem;">
+    <div class="divinr-Fdb">
+      <div class="strong--zbB">지금 사랑받는여행지 💛</div>
+      <div class="list-56q">
+        <button class="item-zUh" id="jejuAccomBtn" onclick="searchAccom('jeju')" >
+			<div class="item-zUh-bg">
+          </div>
+          <div class="strong--6Xj">
+			  JEJU<br/>
+            언제가도 종말로 좋수다
+          </div>         
+        </button>
+        <button class="item-nhP" id="gangwonAccomBtn" onclick="searchAccom('gangwon')">
+          <div class="d8f5bd-8878-4d3f-95f1-482c8c3d83c8jpg-8WM">
+          </div>
+          <div class="pseudo-pe5">
+          </div>
+          <div class="gangwon--wyb">
+			  GANGWON
+            <br/>
+            오션뷰&amp;호수뷰&amp;마운틴뷰들 한 눈에          
+          </div>
+        </button>
+        <button class="bnrcojpg-TKf" id="busanAccomBtn" onclick="searchAccom('busan')">
+          <div class="pseudo-Jr5">
+          </div>
+          <div class="strong--3of">
+          BUSAN
+          <br/>
+          어서오이소~ 호텔오이소~
+          </div>
+        </button>
+        <button class="item-TMb" id="seoulAccomBtn" onclick="searchAccom('seoul')">
+          <div class="bnrcojpg-cEV">
+          </div>
+          <div class="pseudo-Dk5">
+          </div>
+          <div class="strong--ZJ9">
+			  SEOUL
+            <br/>
+            잠들지 않는 시티뷰
+          </div>
+        </button>
+      </div>
+    </div>
+    </div>
+    <!--두번째 리스트-->
+    <div style="display: flex; justify-content: center; align-items: center;  width: 100%; margin-top:2rem;">
+    <div class="divsubmain-umK">
+      <div class="strong--eU1">주간 베스트 TOP 4 👑</div>
+      <div class="list-9ff">	
+        <div class="auto-group-s5jq-6L1">
+          <div class="group-dKw" th:each="a1: ${activityListB}">
+            <button class="divc14dgvke-P4D">
+			  <a th:href="@{'/activity/' + ${a1.activityNo}}">
+              <div class="divc14whb16-vpq">
+                <img class="link-2dd7e47b-7fe0-4dd5-8c03-87870a2e113djpeg-Gdo" th:attr="src=@{/images/activity/__${a1.activityFname1}__}">
+                </img>
+              </div>
+              </a>
+            </button>
+            <div class="divg1qv1ctd-kJ5">
+              <div class="divtitle898622005542393497-UUy" th:text="${a1.activityName}"></div>
+              <div class="auto-group-af8m-9r1">
+                <div class="div1jo4hgw-6mF">
+                  <div class="item--8xq">₩</div>
+                  <div class="item-1396958-eGy" th:text="${a1.activityPrice}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="auto-group-wrnh-pDP">
+            <button class="group-jLM" th:each="a2: ${activityListA}">
+				 <a th:href="@{'/activity/' + ${a2.activityNo}}">
+              <div class="divc14dgvke-Uoj">
+                <div class="divc14whb16-DmK">
+					<!--사진-->
+                  <img class="link-2dd7e47b-7fe0-4dd5-8c03-87870a2e113djpeg-mnq"  th:attr="src=@{/images/activity/__${a2.activityFname2}__}">
+                  </img>
+                </div>
+              </div>
+              <div class="divg1qv1ctd-r3b">
+                <div class="divtitle898622005542393497-P3X" th:text="${a2.activityName}"></div>
+                <div class="auto-group-jhfo-Tp5">
+                  <div class="div1jo4hgw-1qb">
+                    <div class="item--Yj3">₩</div>
+                    <div class="item-1396958-ACh" th:text="${a2.activityPrice}"></div>
+                  </div>
+                </div>
+              </div>
+              </a>
+            </button>
+            <button class="group-EVP" th:each="a3: ${activityListC}">
+				 <a th:href="@{'/activity/' + ${a3.activityNo}}">
+              <div class="divc14dgvke-CBK">
+                <div class="divc14whb16-weh">
+                  <img class="link-2dd7e47b-7fe0-4dd5-8c03-87870a2e113djpeg-tZw"   th:attr="src=@{/images/activity/__${a3.activityFname2}__}">
+                  </img>
+                </div>
+              </div>
+              <div class="divg1qv1ctd-NV7">
+                <div class="divtitle898622005542393497-uzq" th:text="${a3.activityName}"></div>
+                <div class="auto-group-gsx1-1Y5">
+                  <div class="div1jo4hgw-MM3">
+                    <div class="item--cGy">₩</div>
+                    <div class="item-1396958-6ZX" th:text="${a3.activityPrice}"></div>
+                  </div>
+                </div>
+              </div>
+              </a>
+            </button>
+          </div>
+        </div>
+        <!--4위-->
+        <button class="secondList" th:each="a4: ${activityListD}">
+			 <a th:href="@{'/activity/' + ${a4.activityNo}}" style="text-decoration: none;">
+			<div class="image-18-7sw">
+				<img   th:attr="src=@{/images/activity/__${a4.activityFname3}__}" style="    width: 100%; height: 100%; overflow: hidden; border-radius: 1.2rem;">
+				<div class="secondText">
+                  <div class="secondTextDiv">
+                  <div th:text="${a4.activityName}">
+					  </div>
+					  <div style="display: flex; ">
+                    <div>₩</div>
+                    <div th:text="${a4.activityPrice}"></div>
+                    </div>
+                  </div>
+                </div>
+			</div>
+		<div>
+      </div>
+      </a>
+    </button>
+    </div>
+    <!--세번째 리스트-->
+    <div style="display: flex; justify-content: center; align-items: center;  width: 100%; margin-top:2rem;">
+    <div class="divsubmain-Two">
+      <div class="strong--QMF">푸른 바다만큼 시원한 제주 🌊</div>
+      <div class="list-4Ro">
+        <div class="group-1bw" th:each="a:${activityList2}">
+          <button class="divc14dgvke-ZNZ">
+			 <a th:href="@{'/activity/' + ${a.activityNo}}" style="text-decoration: none;">
+            <img class="divc14whb16-VX7"  th:attr="src=@{/images/activity/__${a.activityFname3}__}">
+              <div class="divo47luuh-Sx9">
+                <img class="button--xQh" src="./assets/button--q8m.png"/>
+                <img class="img-6-1--e2d" src="./assets/img-6-1--XXX.png"/>
+              </div>
+              <div class="divc14whb16-VX7-bg">
+              </div>
+              </a>
+          </button>
+          <div class="divg1qv1ctd-Dzq">
+            <div class="divtitle898622005542393497-yz1" th:text="${a.activityName}"></div>
+            <div class="auto-group-8v3s-3ys">
+              <div class="div1jo4hgw-1A1">
+                <div class="item--Fq3">₩</div>
+                <div class="item-1396958-Yfj" th:text="${a.activityPrice}"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!--네번째 리스트-->
+    <div style="display: flex; justify-content: center; align-items: center;  width: 100%; margin-top:2rem;">
+    <div class="divsubmain-U81">
+      <div class="strong--17w">버스 타고 갈 수 있는 여행 🚌</div>
+      <div class="list-fyB">
+        <div class="group-RSZ" th:each="a:${accomodationList}">
+          <button class="divc14dgvke-yDB">
+			  <a th:href="@{'/accomodation/' + ${a.accomodationNo}}">
+            <img class="divc14whb16-HzZ" th:src="@{/images/accomodation/__${a.accomodationFileFname1}__}">
+              <div class="divo47luuh-rGy">
+                <img class="button--B4M" src="./assets/button--VMj.png"/>
+                <img class="img-6-1--U3T" src="./assets/img-6-1--jqs.png"/>
+              </div>
+              <div class="divc14whb16-HzZ-bg">
+              </div>
+			  </a>
+          </button>
+          <div class="divg1qv1ctd-USm">
+            <div class="divtitle898622005542393497-pmX" th:text="${a.accomodationName}"></div>
+            <div class="auto-group-bg8q-Jgh">
+              <div class="div1jo4hgw-3uB">
+                <div class="item--fvZ">₩</div>
+                <div class="item-1396958-zpR" th:text="${a.accomodationPrice}">₩</div>
+              </div>
+            </div>
+          </div>
+        </div>
+   
+        
+      </div>
+    </div>
+    </div>
+    <!--게시판-->
+    <div class="divblockreview-E2V">
+      <div class="divboxreview-tsj">
+        <div class="heading-2-link-qHB">          <div class="heading-2-link-qHB-bg">
+          </div>
+BEST 커뮤니티</div>
+        <div class="divbx-wrapper-26m">
+          <div class="divbx-viewport-8xR">
+            <div class="divboxslide-sQD">
+              <div class="link-p4Z">
+                <div class="heading-3-kiu" th:text="${community.communityTitle}"></div>
+                <div class="auto-group-wcvf-2gR">
+
+                  <div class="ptxtlocal-McD">
+                    <div class="emphasis-Hkm">
+                      <div class="pseudo-ER7">
+                      </div>
+                      <div class="item--ApZ" th:if="${community.communityCategory.name() == 'MYMONEY'}">내돈내산</div>
+                      <div class="item--ApZ" th:if="${community.communityCategory.name() == 'SPONSORSHIP'}">추천해요</div>
+                      <div class="item--ApZ" th:if="${community.communityCategory.name() == 'TRVELMATE'}">여행메이트</div>
+                      <div class="item--ApZ" th:if="${community.communityCategory.name() == 'INFORMATION'}">정보</div>
+                      <div class="item--ApZ" th:if="${community.communityCategory.name() == 'ETC'}">기타</div>
+                    </div>
+                  </div>
+                  <div class="divreviewview-zBK">
+                    <div class="ph2d-8015b704-Vtm">
+                      <div class="item-200--CHP" th:utext="${community.communityContent}">만족도 200%의 완벽한 여행을 가이드 해주신 최승자</div>
+                    </div>
+                    <!--
+                    <div class="spanthumb-qFo">
+                      <div class="png-zPb">
+                      </div>
+                    </div>
+                    -->
+                  </div>
+                  <div class="spanunderlinelinkarrow-mtu">                  
+										  <a class="spanunderlinelinkarrow-mtu-bg" th:href="@{/main/communityDetail2(communityNo=${community.communityNo})}"> 자세히 보기</a></div>
+                </div>
+              </div>
+              <div class="list-UpZ">
+                <div class="spanthumb-RYm">
+                  <div class="spanthumb-RYm-bg">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--footer-->
+	<div id="footer"></div>
+</body>

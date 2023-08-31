@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/admin/adminPage/mail.css}">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha384-nHGZxOCfPIKnRfMCsb5sy8GfnmUjF0zUbSHEA0R5MUYD6FpXw6boPkTtIj0kl3V6" crossorigin="anonymous"></script>
+<script>
+	//HTML sideBar연결 		
+    fetch("/admin/sidebar")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("sidebar").innerHTML = data;
+            
+            // 사이드바에 아코디언 기능 적용
+            $(".accordion").click(function() {
+                console.log("Clicked"); // Debugging message
+                $(this).toggleClass("active");
+                $(this).siblings(".panel").slideToggle("fast");
+            });
+
+    });
+    function navigateTo(url) {
+	  window.location.href = url;
+	}
+	
+	$(document).ready(function() {
+    $(".btn-submit").click(function(event) {
+        event.preventDefault();
+
+        if (confirm('메일을 보내시겠습니까?')) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/sendEmail",
+                success: function(response) {
+                    alert("메일을 성공적으로 보냈습니다.");
+                },
+                error: function() {
+                    alert("메일 보내기에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("메일 보내기를 취소하였습니다.");
+        }
+    });
+});
+</script>
+</head>
+<body>
+<!--사이드바-->
+<div id="sidebar"></div>
+<div class="MainBoard" id="mainContent">
+    <div class="main_container">
+        <form action="/admin/sendEmail" method="post">
+            <button type="submit" class="btn-submit">메일 보내기</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

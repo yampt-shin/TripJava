@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/admin/activity/activityList.css}">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha384-nHGZxOCfPIKnRfMCsb5sy8GfnmUjF0zUbSHEA0R5MUYD6FpXw6boPkTtIj0kl3V6" crossorigin="anonymous"></script>
+<script>
+	//HTML sideBar연결 		
+    fetch("/admin/sidebar")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("sidebar").innerHTML = data;
+            
+            // 사이드바에 아코디언 기능 적용
+            $(".accordion").click(function() {
+                console.log("Clicked"); // Debugging message
+                $(this).toggleClass("active");
+                $(this).siblings(".panel").slideToggle("fast");
+            });
+
+    });
+    function navigateTo(url) {
+	  window.location.href = url;
+	}
+	
+	$(document).ready(function(){
+	  $("#btnSearch").click(function(){
+	    var searchType = $("#cname").val();
+	    var keyword = $("#keyword").val();
+	    window.location.href = "/admin/activity/activityList?" + searchType + "=" + keyword;
+	  });
+	});
+
+	  document.addEventListener("DOMContentLoaded", function () {
+	    const btnActivityInsert = document.querySelector(".insert_list");
+		btnActivityInsert.addEventListener("click", function () {
+		navigateTo("/admin/addActivity");
+		});
+	
+	    const btnUpdate = document.querySelector(".update_list");
+	    btnUpdate.addEventListener("click", openUpdateModal);
+	  });
+	  
+	$(document).ready(function() {
+	  $(".delete_list").click(function(event) {
+	    event.preventDefault();
+	    
+	    if (confirm('정말로 삭제하시겠습니까?')) {
+	      let activityNo = $(this).data('activityno');
+	      let data = new FormData();
+	      data.append('activityNo', activityNo);
+	      
+		    $.ajax({
+			    url: "/activity/delete/" + activityNo,
+			    method: "post",
+			    success: function(response) {
+			        alert("삭제되었습니다.");
+			        window.location.reload();
+			    },
+			    error: function() {
+			        alert("삭제에 실패하였습니다.");
+			    }
+			});
+	    }
+	  });
+	});
+	
+	$(document).ready(function () {
+	    function openUpdateModal() {
+	        const modalUpdate = document.getElementById("modalUpdate");
+	        modalUpdate.style.display = "block";
+	
+	        const btnCloseModalUpdate = document.getElementById("btnCloseModalUpdate");
+	        btnCloseModalUpdate.addEventListener("click", closeUpdateModal);
+	    }
+	
+	    function closeUpdateModal() {
+	        console.log("Closing modal");
+	
+	        const modalUpdate = document.getElementById("modalUpdate");
+	        modalUpdate.style.display = "none";
+	
+	        const btnCloseModalUpdate = document.getElementById("btnCloseModalUpdate");
+	        btnCloseModalUpdate.removeEventListener("click", closeUpdateModal);
+	    }
+
+    // Attach click event to the update button
+    $(".update_list").click(function () {
+        openUpdateModal();
+        // Extract user data and populate the form fields
+        const activityNo = $(this).closest("tr").find(".table_no").text();
+        const activityName = $(this).closest("tr").find(".table_name").text();
+        const activityAddr = $(this).closest("tr").find(".table_addr").text();
+        const activityPrice = $(this).closest("tr").find(".table_price").text();
+        const activityTime = $(this).closest("tr").find(".table_time").text();
+        const activityExplanation = $(this).closest("tr").find(".table_explanation").text();
+        const activityFname1 = $(this).closest("tr").find(".table_fname1").text();
+        const activityFname2 = $(this).closest("tr").find(".table_fname2").text();
+        const activityFname3 = $(this).closest("tr").find(".table_fname3").text();
+
+        $("#updateForm input[name='activityNo']").val(activityNo);
+        $("#updateForm input[name='activityName']").val(activityName);
+        $("#updateForm input[name='activityAddr']").val(activityAddr);
+        $("#updateForm textarea[name='activityExplanation']").val(activityExplanation);
+        $("#updateForm input[name='activityPrice']").val(activityPrice);
+        $("#updateForm input[name='activityTime']").val(activityTime);
+        $("#updateForm input[name='activityFname1']").val(activityFname1);
+        $("#updateForm input[name='activityFname2']").val(activityFname2);
+        $("#updateForm input[name='activityFname3']").val(activityFname3);
+        
+        $("#activityImage1").attr("src", "/images/admin/" + activityFname1);
+		$("#activityImage2").attr("src", "/images/admin/" + activityFname2);
+		$("#activityImage3").attr("src", "/images/admin/" + activityFname3);
+    });
+
+    // Modal form submission
+    $("#updateForm").submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "/activity/update/" + formData.get("activityNo"),
+            type: "post",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (response) {
+                alert("수정에 성공하였습니다.");
+                window.location.reload();
+            },
+            error: function () {
+                alert("수정에 실패하였습니다.");
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+<!--사이드바-->
+<div id="sidebar"></div>
+<div class="MainBoard" id="mainContent">
+<div class="main_container">
+	<div class="list_top">
+		<div class="search_box">
+			<select name="select_box" id="cname">
+					<option value="activityName">이름</option>
+					<option value="activityAddr">주소</option>
+			</select>
+			<div class="search_bar">
+				<i class="fa-solid fa-magnifying-glass fa-lg" style="color: #8fa0bd;" id="btnSearch"></i>
+				<input type="search" class="search" id="keyword" name="keyword" placeholder="찾으실 내용을 검색해주세요">
+				<input type="hidden" id="pageNUM" name="pageNUM" value="1" />
+			</div>
+		</div>
+		<button class="insert_list">추가</button>
+	</div>
+	<div class="container">
+	<hr/>
+	<table class="rwd-table">
+		<tr>
+			<th class="table_no">액티비티 코드</th>
+			<th class="table_name">이름</th>
+			<th class="table_addr">주소</th>
+			<th class="table_price">가격</th>
+			<th class="table_time">시간</th>
+			<th class="table_update">관리</th>
+		</tr>
+		<tr th:each="a:${list}">
+			<td class="table_no" th:text="${a.activityNo}"></td>
+			<td class="table_name" th:text="${a.activityName}"></td>
+			<td class="table_addr" th:text="${a.activityAddr}"></td>
+			<td class="table_price" th:text="${#numbers.formatDecimal(a.activityPrice, 0, 'COMMA', 0, 'POINT')} + '원'"></td>
+			<td class="table_time" th:text="${a.activityTime+'시간'}"></td>
+			<td class="table_explanation" style="display: none;" th:text="${a.activityExplanation}"></td>
+			<td class="table_fname1" style="display: none;" th:text="${a.activityFname1}"></td>
+			<td class="table_fname2" style="display: none;" th:text="${a.activityFname2}"></td>
+			<td class="table_fname3" style="display: none;" th:text="${a.activityFname3}"></td>
+			<td class="table_update">
+				<button class="update_list" onclick=openUpdateModal() >수정</button>
+				<button class="delete_list" th:data-activityno="${a.activityNo}">삭제</button>
+			</td>
+		</tr>
+	</table>
+	<hr />
+	</div>
+	<div class="pagination">
+	    <a href="/admin/activity/activityList?page=0&activityName=${activityName}&activityAddr=${activityAddr}">«</a>
+	     <!--굳이 태그로 감쌀 필요 없는 부분을 타임리프 문법으로 사용할 때 사용-->
+		    <th:block th:each="page:${#numbers.sequence(startPage, endPage)}">
+			    <a th:href="@{/admin/activity/activityList(page=${page -1}, activityName=${activityName}, activityAddr=${activityAddr})}" th:text="${page}" th:style="${page == nowPage ? 'background-color:rgb(0, 128, 192); color:white; border-radius:5px;' : ''}">></a>
+			</th:block>
+	    <a href="/admin/activity/activityList?page=${totalPages - 1}&activityName=${activityName}&activityAddr=${activityAddr}">»</a>
+	</div>
+</div>
+	<div id="modalUpdate" class="modalUpdate">
+	  <div class="modalUpdate-content">
+	    <span class="close-modalUpdate-btn" id="btnCloseModalUpdate">×</span>
+	    <h2>액티비티 수정</h2>
+	    <form id="updateForm" action="/activity/update/{activityNo}" method="post">
+			<input type="hidden" name="activityNo"/>
+			이름 : <input type="text" name="activityName"><br/>
+			주소 : <input type="text" name="activityAddr"><br/>
+			가격 : <input type="text" name="activityPrice"><br/>
+			시간 : <input type="text" name="activityTime"><br/>
+			설명 : <br>
+			<textarea rows="5" cols="60" name="activityExplanation"></textarea><br/>
+			첨부파일1 : <input type="file" name="uploadFile1"><br/>
+			<img id="activityImage1" src="/images/admin/default.png" width="40px" height="auto">
+			첨부파일2 : <input type="file" name="uploadFile2"><br/>
+			<img id="activityImage2" src="/images/admin/default.png" width="40px" height="auto">
+			첨부파일3 : <input type="file" name="uploadFile3"><br/>
+			<img id="activityImage3" src="/images/admin/default.png" width="40px" height="auto">
+			<input type="submit" value="수정"/>
+			<input type="reset" value="다시입력"/>
+		</form>
+	  </div>
+	</div>
+</div>
+</body>
+</html>
