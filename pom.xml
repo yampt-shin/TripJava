@@ -75,6 +75,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+	        <groupId>com.h2database</groupId>
+	        <artifactId>h2</artifactId>
+	        <version>1.4.200</version> <!-- 사용하려는 H2 버전에 맞게 변경 -->
+	    </dependency>
 	</dependencies>
 
 	<build>
