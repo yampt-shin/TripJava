@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "view_like_activity")
+@NoArgsConstructor
 public class View_LikeActivity {
 
 	@Id
@@ -26,50 +28,6 @@ public class View_LikeActivity {
 	private int reviewCount;
 	@Column(name = "avg_review_star")
 	private double avgReviewStar;
-	public int getUsersNo() {
-		return usersNo;
-	}
-	public void setUsersNo(int usersNo) {
-		this.usersNo = usersNo;
-	}
-	public int getActivityNo() {
-		return activityNo;
-	}
-	public void setActivityNo(int activityNo) {
-		this.activityNo = activityNo;
-	}
-	public String getActivityName() {
-		return activityName;
-	}
-	public void setActivityName(String activityName) {
-		this.activityName = activityName;
-	}
-	public String getActivityFname1() {
-		return activityFname1;
-	}
-	public void setActivityFname1(String activityFname1) {
-		this.activityFname1 = activityFname1;
-	}
-	public float getActivityPrice() {
-		return activityPrice;
-	}
-	public void setActivityPrice(float activityPrice) {
-		this.activityPrice = activityPrice;
-	}
-	public int getReviewCount() {
-		return reviewCount;
-	}
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
-	}
-	public double getAvgReviewStar() {
-		return avgReviewStar;
-	}
-	public void setAvgReviewStar(double avgReviewStar) {
-		this.avgReviewStar = avgReviewStar;
-	}
-	
-	
 }
 
 /*

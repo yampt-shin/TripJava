@@ -1,10 +1,21 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @Entity
 @Table(name = "accomodation_info")
 @SequenceGenerator(
@@ -37,63 +48,5 @@ public class AccomodationInfo {
     @JoinColumn(name = "accomodation_no", foreignKey = @ForeignKey(name = "fk_accom_info_to_accom"))
     private Accomodation accomodation;
 
-	public int getAccomodationInfoNo() {
-		return accomodationInfoNo;
-	}
 
-	public void setAccomodationInfoNo(int accomodationInfoNo) {
-		this.accomodationInfoNo = accomodationInfoNo;
-	}
-
-	public int getAccomodationInfoMinPerson() {
-		return accomodationInfoMinPerson;
-	}
-
-	public void setAccomodationInfoMinPerson(int accomodationInfoMinPerson) {
-		this.accomodationInfoMinPerson = accomodationInfoMinPerson;
-	}
-
-	public int getAccomodationInfoMaxPersion() {
-		return accomodationInfoMaxPersion;
-	}
-
-	public void setAccomodationInfoMaxPersion(int accomodationInfoMaxPersion) {
-		this.accomodationInfoMaxPersion = accomodationInfoMaxPersion;
-	}
-
-	public int getAccomodationInfoSize() {
-		return accomodationInfoSize;
-	}
-
-	public void setAccomodationInfoSize(int accomodationInfoSize) {
-		this.accomodationInfoSize = accomodationInfoSize;
-	}
-
-	public String getAccomodationInfoExplanation() {
-		return accomodationInfoExplanation;
-	}
-
-	public void setAccomodationInfoExplanation(String accomodationInfoExplanation) {
-		this.accomodationInfoExplanation = accomodationInfoExplanation;
-	}
-
-	public String getAccomodationPriceperPerson() {
-		return accomodationPriceperPerson;
-	}
-
-	public void setAccomodationPriceperPerson(String accomodationPriceperPerson) {
-		this.accomodationPriceperPerson = accomodationPriceperPerson;
-	}
-
-	public Accomodation getAccomodation() {
-		return accomodation;
-	}
-
-	public void setAccomodation(Accomodation accomodation) {
-		this.accomodation = accomodation;
-	}
-
-	
-
-    
 }

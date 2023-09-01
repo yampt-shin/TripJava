@@ -1,16 +1,28 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.Data;
 
+
+@Data
 @Entity
 @Table(name = "accomodation_rv")
 @SequenceGenerator(
@@ -51,64 +63,8 @@ public class AccomodationRV {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accomodation_no", foreignKey = @ForeignKey(name = "fk_accom_rv_to_accom"))
     private Accomodation accomodation;
-	public int getAccomodationRVNo() {
-		return accomodationRVNo;
-	}
-	public void setAccomodationRVNo(int accomodationRVNo) {
-		this.accomodationRVNo = accomodationRVNo;
-	}
 
 	
-	public LocalDate getAccomodationRVDate() {
-		return accomodationRVDate;
-	}
-	public void setAccomodationRVDate(LocalDate accomodationRVDate) {
-		this.accomodationRVDate = accomodationRVDate;
-	}
-	public String getAccomodationRVName() {
-		return accomodationRVName;
-	}
-	public void setAccomodationRVName(String accomodationRVName) {
-		this.accomodationRVName = accomodationRVName;
-	}
-	public String getAccomodationRVPeople() {
-		return accomodationRVPeople;
-	}
-	public void setAccomodationRVPeople(String accomodationRVPeople) {
-		this.accomodationRVPeople = accomodationRVPeople;
-	}
-	public String getAccomodationRVPhone() {
-		return accomodationRVPhone;
-	}
-	public void setAccomodationRVPhone(String accomodationRVPhone) {
-		this.accomodationRVPhone = accomodationRVPhone;
-	}
-	public Users getUsers() {
-		return users;
-	}
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-	public Accomodation getAccomodation() {
-		return accomodation;
-	}
-	public void setAccomodation(Accomodation accomodation) {
-		this.accomodation = accomodation;
-	}
-	public LocalDate getAccomodationRVCheckIn() {
-		return accomodationRVCheckIn;
-	}
-	public void setAccomodationRVCheckIn(LocalDate accomodationRVCheckIn) {
-		this.accomodationRVCheckIn = accomodationRVCheckIn;
-	}
-	public LocalDate getAccomodationRVCheckOut() {
-		return accomodationRVCheckOut;
-	}
-	public void setAccomodationRVCheckOut(LocalDate accomodationRVCheckOut) {
-		this.accomodationRVCheckOut = accomodationRVCheckOut;
-	}
-	public AccomodationRV() {
-	}
 	public AccomodationRV(int accomodationRVNo, LocalDate accomodationRVCheckIn, LocalDate accomodationRVCheckOut,
 			LocalDate accomodationRVDate, String accomodationRVName, String accomodationRVPeople,
 			String accomodationRVPhone, Users users, Accomodation accomodation) {
@@ -131,8 +87,5 @@ public class AccomodationRV {
 				+ accomodationRVPeople + ", accomodationRVPhone=" + accomodationRVPhone + ", users=" + users
 				+ ", accomodation=" + accomodation + "]";
 	}
-
-	
-	
     
 }

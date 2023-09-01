@@ -1,9 +1,19 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(
         name = "accomodation_like"
@@ -31,34 +41,4 @@ public class AccomodationLike {
     @JoinColumn(name = "accomodation_no", foreignKey = @ForeignKey(name = "fk_accom_like_to_accom"))
     private Accomodation accomodation;
 
-	public int getAccmodationLikeNo() {
-		return accmodationLikeNo;
-	}
-
-	public void setAccmodationLikeNo(int accmodationLikeNo) {
-		this.accmodationLikeNo = accmodationLikeNo;
-	}
-
-	public Users getUsers() {
-		return users;
-	}
-
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
-	public Accomodation getAccomodation() {
-		return accomodation;
-	}
-
-	public void setAccomodation(Accomodation accomodation) {
-		this.accomodation = accomodation;
-	}
-
-	public AccomodationLike() {
-	}
-
-    
-
-    
 }

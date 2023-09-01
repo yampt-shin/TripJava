@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "accomodation")
 @SequenceGenerator(name = "ACCOMODATION_SEQ_GEN", 
@@ -28,53 +29,4 @@ public class Accomodation {
 	@JoinColumn(name = "business_no", foreignKey = @ForeignKey(name = "fk_accom_to_business"))
 	private Business business;
 
-	public int getAccomodationNo() {
-		return accomodationNo;
-	}
-
-	public void setAccomodationNo(int accomodationNo) {
-		this.accomodationNo = accomodationNo;
-	}
-
-	public String getAccomodationName() {
-		return accomodationName;
-	}
-
-	public void setAccomodationName(String accomodationName) {
-		this.accomodationName = accomodationName;
-	}
-
-	public String getAccomodationAddr() {
-		return accomodationAddr;
-	}
-
-	public void setAccomodationAddr(String accomodationAddr) {
-		this.accomodationAddr = accomodationAddr;
-	}
-
-	public String getAccomodationPrice() {
-		return accomodationPrice;
-	}
-
-	public void setAccomodationPrice(String accomodationPrice) {
-		this.accomodationPrice = accomodationPrice;
-	}
-
-	public AccomodationCategory getAccomodationCategory() {
-		return accomodationCategory;
-	}
-
-	public void setAccomodationCategory(AccomodationCategory accomodationCategory) {
-		this.accomodationCategory = accomodationCategory;
-	}
-
-	public Business getBusiness() {
-		return business;
-	}
-
-	public void setBusiness(Business business) {
-		this.business = business;
-	}
-
-	
 }

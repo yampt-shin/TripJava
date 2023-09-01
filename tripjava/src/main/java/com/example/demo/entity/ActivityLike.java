@@ -1,9 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.entity.Activity;
-import com.example.demo.entity.ActivityLike;
-import com.example.demo.entity.Users;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -53,23 +49,5 @@ public class ActivityLike {
     }
     public ActivityLike() {
     }
-	public int getActivityLikeNo() {
-		return activityLikeNo;
-	}
-	public void setActivityLikeNo(int activityLikeNo) {
-		this.activityLikeNo = activityLikeNo;
-	}
-	public Users getUsersNo() {
-		return usersNo;
-	}
-	public void setUsersNo(Users usersNo) {
-		this.usersNo = usersNo;
-	}
-	public Activity getActivityNo() {
-		return activityNo;
-	}
-	public void setActivityNo(Activity activityNo) {
-		this.activityNo = activityNo;
-	}
     
 }

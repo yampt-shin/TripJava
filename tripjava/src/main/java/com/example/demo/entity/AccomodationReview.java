@@ -1,14 +1,27 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "accomodation_review")
 @SequenceGenerator(
@@ -42,42 +55,6 @@ public class AccomodationReview {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accomodation_no", foreignKey = @ForeignKey(name = "fk_accom_review_to_accom"))
     private Accomodation accomodation;
-	public int getAccomodationReviewNo() {
-		return accomodationReviewNo;
-	}
-	public void setAccomodationReviewNo(int accomodationReviewNo) {
-		this.accomodationReviewNo = accomodationReviewNo;
-	}
-	public double getAccomodationReviewStar() {
-		return accomodationReviewStar;
-	}
-	public void setAccomodationReviewStar(double accomodationReviewStar) {
-		this.accomodationReviewStar = accomodationReviewStar;
-	}
-	public String getAccomodationReviewContent() {
-		return accomodationReviewContent;
-	}
-	public void setAccomodationReviewContent(String accomodationReviewContent) {
-		this.accomodationReviewContent = accomodationReviewContent;
-	}
-	public LocalDate getAccomodationReviewDate() {
-		return accomodationReviewDate;
-	}
-	public void setAccomodationReviewDate(LocalDate accomodationReviewDate) {
-		this.accomodationReviewDate = accomodationReviewDate;
-	}
-	public Users getUsers() {
-		return users;
-	}
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-	public Accomodation getAccomodation() {
-		return accomodation;
-	}
-	public void setAccomodation(Accomodation accomodation) {
-		this.accomodation = accomodation;
-	}
 	public AccomodationReview(int accomodationReviewNo, double accomodationReviewStar, String accomodationReviewContent,
 			LocalDate accomodationReviewDate, Users users, Accomodation accomodation) {
 		super();
@@ -92,9 +69,4 @@ public class AccomodationReview {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-
-    
-    
-    
 }
