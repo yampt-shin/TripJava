@@ -223,19 +223,19 @@
 	<div id="myModal" class="modal">
 	  <div class="modal-content">
 	    <span class="close-modal-btn" id="btnCloseModal">&times;</span>
-	    <h2>사용자 추가</h2>
+	    <h2>액티비티 예약 추가</h2>
 	    <form id="insertForm" action="/activityRv/insert" method="post">		
 			예약날짜 : <input type="Date" name="rvDate"><br/>
 			체험날짜 : <input type="Date" name="activityRvDate"><br>
 			인원수 : <input type="text" name="activityRvPeople"><br>
 			번호 : <input type="text" name="activityRvPhone"><br/>
-						사용자:
+			회원 :
 	        <select name='users.usersNo'>
 	            <option th:each='users : ${usersName}' th:value='${users.usersNo}' th:text='${users.usersName}'></option>
 	        </select><br>
 	
 	         <!-- Activities dropdown -->
-	         액티비티:
+	         액티비티 :
 	         <select name='activity.activityNo'>
 	             <option th:each='activity : ${activityName}' th:value='${activity.activityNo}' th:text='${activity.activityName}'></option>
 	         </select><br>
@@ -249,14 +249,14 @@
 	<div id="modalUpdate" class="modalUpdate">
 	  <div class="modalUpdate-content">
 	    <span class="close-modalUpdate-btn" id="btnCloseModalUpdate">×</span>
-	    <h2>사용자 수정</h2>
+	    <h2>액티비티 예약 수정</h2>
 	    <form id="updateForm" action="/activityRv/update/{activityRvNo}" method="post">
 			<input type="hidden" name="activityRvNo"/>
 			예약날짜 : <input type="Date" name="rvDate"><br/>
 			체험날짜 : <input type="Date" name="activityRvDate"><br>
 			인원수 : <input type="text" name="activityRvPeople"><br>
 			번호 : <input type="text" name="activityRvPhone"><br/>
-			사용자:
+			회원 :
  			<select name='users.usersNo'>
 			    <option th:each='user : ${usersName}' 
 			      th:value='${user.usersNo}'
