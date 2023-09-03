@@ -68,7 +68,7 @@
 ![5](https://github.com/yampt-shin/TripJava/assets/83085779/6b1d2ef3-7642-4704-b933-eb90dba7b1df)
 <br />
 
-# Structure diagram
+# Structure Diagram
 ![6](https://github.com/yampt-shin/TripJava/assets/83085779/24bcd6ea-bc8e-4545-9911-b858b1003de0)
 <br />
 
@@ -77,7 +77,7 @@
 
 <br/>
 
-# Key Functions Preview
+# Key Functions 
 
 ### 1. 메인페이지
 
