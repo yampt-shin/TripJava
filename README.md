@@ -14,9 +14,11 @@
 
 # Service Intro
 
+<br/>
 <p align="center">
-  <img width="200" alt="logo" src="https://github.com/yampt-shin/TripJava/assets/83085779/c7737ab6-a48c-430f-894d-e802829c39e5">
+  <img width="400" alt="logo" src="https://github.com/yampt-shin/TripJava/assets/83085779/c7737ab6-a48c-430f-894d-e802829c39e5">
 </p>
+<br/>
 
 ```
 트립자바(TripJava)는 '여행을 잡아라'는 뜻을 내포한 이름으로,
@@ -43,17 +45,6 @@
 
 <br />
 
-# Used Tech Stack
-![5](https://github.com/yampt-shin/TripJava/assets/83085779/6b1d2ef3-7642-4704-b933-eb90dba7b1df)
-<br />
-
-# Structure diagram
-![6](https://github.com/yampt-shin/TripJava/assets/83085779/24bcd6ea-bc8e-4545-9911-b858b1003de0)
-<br />
-
-# ERD
-![9](https://github.com/yampt-shin/TripJava/assets/83085779/b9f034a0-b4df-4f1d-81e7-b81f4d12e792)
-
 # Service Purpose
 
 현대 사회에서 여행은 단순히 휴식과 즐거움을 위한 활동이 아니라, 새로운 경험과 문화를 체험하며 자아를 발견하는 중요한 과정이 되었습니다. 
@@ -71,6 +62,20 @@
 ```
 
 <br />
+
+
+# Used Tech Stack
+![5](https://github.com/yampt-shin/TripJava/assets/83085779/6b1d2ef3-7642-4704-b933-eb90dba7b1df)
+<br />
+
+# Structure diagram
+![6](https://github.com/yampt-shin/TripJava/assets/83085779/24bcd6ea-bc8e-4545-9911-b858b1003de0)
+<br />
+
+# ERD
+![9](https://github.com/yampt-shin/TripJava/assets/83085779/b9f034a0-b4df-4f1d-81e7-b81f4d12e792)
+
+<br/>
 
 # Key Functions Preview
 
